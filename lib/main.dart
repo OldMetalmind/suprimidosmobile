@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:suprimidospt/pages/favorites.dart';
 
 import 'package:suprimidospt/pages/home.dart';
 import 'package:suprimidospt/pages/settings.dart';
@@ -25,6 +26,7 @@ class MyApp extends StatelessWidget {
         '/settings': (_) => Settings(),
         '/delays': (_) => Delays(),
         '/about': (_) => About(),
+        '/favorites': (_) => Favorites(),
       },
       onGenerateRoute: _getRoute,
     );

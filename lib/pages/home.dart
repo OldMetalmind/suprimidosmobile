@@ -264,6 +264,15 @@ class HomeState extends State<Home> {
                 Navigator.of(context).pushNamed('/about');
               },
             ),
+            Divider(),
+            ListTile(
+              title: Text('Favoritos'),
+              leading: Icon(Icons.favorite),
+              onTap: () {
+                Navigator.of(context).pop();
+                Navigator.of(context).pushNamed('/favorites');
+              },
+            ),
           ],
         ),
       ),
