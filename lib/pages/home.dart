@@ -137,40 +137,67 @@ class HomeState extends State<Home> {
           _thisEnd = _thisEnd + ' (${list[index].endTime.trim()})';
         }
 
-        return ListTile(
-          title: Column(
+        if (index == 0) {
+          return Column(
             children: <Widget>[
-              Text(
-                _thisStart,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(
-                _thisEnd,
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              Text(locationNames[list[index].line]),
+              showSuppressedHeader(index),
+              showSuppressedLine(index, _thisStart, _thisEnd)
             ],
-            crossAxisAlignment: CrossAxisAlignment.start,
+          );
+        }
+
+        return showSuppressedLine(index, _thisStart, _thisEnd);
+      },
+    );
+  }
+
+  Widget showSuppressedHeader(index) {
+    return Container(
+      padding: EdgeInsets.all(10),
+      child: Text( "O último comboio suprimido foi "+
+        timeago.format(
+          DateTime.fromMillisecondsSinceEpoch(list[index].timestamp * 1000),
+          locale: 'pt_BR',
+        ),
+        style: TextStyle(
+          fontSize: 15,
+          fontWeight: FontWeight.bold
           ),
-          trailing: Text(list[index].vendor),
-          isThreeLine: false,
-          subtitle: Text(
-            'Suprimido ' +
-                timeago.format(
-                  DateTime.fromMillisecondsSinceEpoch(
-                      list[index].timestamp * 1000),
-                  locale: 'pt_BR',
-                ),
+      ),
+    );
+  }
+
+  Widget showSuppressedLine(index, _thisStart, _thisEnd) {
+    return ListTile(
+      title: Column(
+        children: <Widget>[
+          Text(
+            _thisStart,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
           ),
-          onTap: () {
-            Navigator.of(context)
-                .pushNamed('/line/${list[index].line}/supressed');
-          },
-        );
+          Text(
+            _thisEnd,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          Text(locationNames[list[index].line]),
+        ],
+        crossAxisAlignment: CrossAxisAlignment.start,
+      ),
+      trailing: Text(list[index].vendor),
+      isThreeLine: false,
+      subtitle: Text(
+        'Suprimido ' +
+            timeago.format(
+              DateTime.fromMillisecondsSinceEpoch(list[index].timestamp * 1000),
+              locale: 'pt_BR',
+            ),
+      ),
+      onTap: () {
+        Navigator.of(context).pushNamed('/line/${list[index].line}/supressed');
       },
     );
   }
